@@ -1,0 +1,19 @@
+{% extends 'vinoteca/base.html' %}
+
+{% block body %}
+
+<h1>Entrecopas</h1>
+
+<h2>Catálogo de vinos</h2>
+
+{% for vino in vinos %}
+    <p>
+        {{ vino.nombre }}
+        -
+        ${{ vino.precio }}
+    </p>
+{% empty %}
+    <p>No hay vinos cargados.</p>
+{% endfor %}
+
+{% endblock %}
