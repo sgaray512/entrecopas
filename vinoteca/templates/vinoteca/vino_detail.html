@@ -1,0 +1,20 @@
+{% extends 'vinoteca/base.html' %}
+
+{% block body %}
+<h1>{{ vino.nombre }}</h1>
+<p>{{ vino.descripcion }}</p>
+<p>Precio: ${{ vino.precio }}</p>
+<p>Stock: {{ vino.stock }}</p>
+<p>Bodega: {{ vino.bodega }}</p>
+<p>Categoría: {{ vino.categoria }}</p>
+{% if vino.imagen %}
+    <img
+        src="{{ vino.imagen.url }}"
+        width="250"
+        alt="{{ vino.nombre }}"
+    >
+{% endif %}
+<hr>
+<a href="{% url 'vino_update' vino.pk %}">Editar</a>
+<a href="{% url 'vino_delete' vino.pk %}">Eliminar</a>
+{% endblock %}

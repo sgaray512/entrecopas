@@ -1,0 +1,15 @@
+{% extends 'vinoteca/base.html' %}
+
+{% block body %}
+<h1>Listado de Vinos</h1>
+<a href="{% url 'vino_create' %}">Crear vino</a>
+<hr>
+{% for vino in vinos %}
+    <h3>{{ vino.nombre }}</h3>
+    <p>${{ vino.precio }}</p>
+    <a href="{% url 'vino_detail' vino.pk %}">Ver detalle</a>
+    <br>
+{% empty %}
+    <p>No hay vinos cargados.</p>
+{% endfor %}
+{% endblock %}

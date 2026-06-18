@@ -1,16 +1,54 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <title>Entrecopas</title>
 </head>
 <body>
+    <nav>
+        <a href="{% url 'home' %}">Entrecopas</a>
+        <a href="{% url 'home' %}">Inicio</a>
+        <a href="{% url 'vino_list' %}">Vinos</a>
+        <a href="{% url 'admin:index' %}">Admin</a>
 
-    <h1>Entrecopas</h1>
-
+        {% if user.is_authenticated %}
+            <p>{{ mensaje_bienvenida }}</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">
+                    Cerrar sesión
+                </button>
+            </form>
+        {% else %}
+            <p>{{ mensaje_bienvenida }}</p>
+            <a href="{% url 'login' %}">
+                Iniciar sesión
+            </a>
+            <a href="{% url 'register' %}">
+                Registrarse
+            </a>
+        {% endif %}
+    </nav>
     <hr>
-
-    {% block body %}
-    {% endblock %}
-
+    <main>
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        {% block body %}
+        {% endblock %}
+    </main>
+    <footer>
+        <hr>
+        <p>
+            {{ year }} - Entrecopas
+        </p>
+    </footer>
 </body>
 </html>
