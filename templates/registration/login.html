@@ -1,13 +1,12 @@
-
-{% extends 'corte/base.html' %}
+{% extends 'vinoteca/base.html' %}
 
 {% block body %}
-<section class="auth-form-container">
+<section>
     <h1>Iniciar sesión</h1>
-    <form method="post" class="auth-form">
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn-reserva">Ingresar</button>
+        <button type="submit">Ingresar</button>
     </form>
     <p>¿No tenés cuenta? <a href="{% url 'register' %}">Registrarse</a></p>
 </section>

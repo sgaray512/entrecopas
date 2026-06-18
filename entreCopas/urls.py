@@ -22,6 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('vinoteca.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('usuarios.urls')),
 ]
 
 if settings.DEBUG:
