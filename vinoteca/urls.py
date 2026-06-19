@@ -7,6 +7,11 @@ from .views import (
     VinoCreateView,
     VinoUpdateView,
     VinoDeleteView,
+    BodegaListView,
+    BodegaDetailView,
+    BodegaCreateView,
+    BodegaUpdateView,
+    BodegaDeleteView,
 )
 
 urlpatterns = [
@@ -16,4 +21,9 @@ urlpatterns = [
     path('vinos/nuevo/',VinoCreateView.as_view(),name='vino_create'),
     path('vinos/<int:pk>/editar/',VinoUpdateView.as_view(),name='vino_update'),
     path('vinos/<int:pk>/eliminar/',VinoDeleteView.as_view(),name='vino_delete'),
+    path('bodegas/',BodegaListView.as_view(),name='bodega_list'),
+    path('bodegas/<int:pk>/',BodegaDetailView.as_view(),name='bodega_detail'),
+    path('bodegas/nueva/',BodegaCreateView.as_view(),name='bodega_create'),
+    path('bodegas/<int:pk>/editar/',BodegaUpdateView.as_view(),name='bodega_update'),
+    path('bodegas/<int:pk>/eliminar/',BodegaDeleteView.as_view(),name='bodega_delete'),
 ]

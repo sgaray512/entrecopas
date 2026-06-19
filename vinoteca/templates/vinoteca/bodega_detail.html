@@ -1,0 +1,21 @@
+{% extends 'vinoteca/base.html' %}
+
+{% block body %}
+<h1>{{ bodega.nombre }}</h1>
+<p>Provincia: {{ bodega.provincia }}</p>
+<p>{{ bodega.descripcion }}</p>
+<hr>
+<h2>Vinos de esta bodega</h2>
+{% for vino in bodega.vinos.all %}
+    <p>
+        {{ vino.nombre }} - ${{ vino.precio }}
+    </p>
+{% endfor %}
+<hr>
+{% if perms.vinoteca.change_bodega %}
+    <a href="{% url 'bodega_update' bodega.pk %}">Editar</a>
+{% endif %}
+{% if perms.vinoteca.delete_bodega %}
+    <a href="{% url 'bodega_delete' bodega.pk %}">Eliminar</a>
+{% endif %}
+{% endblock %}

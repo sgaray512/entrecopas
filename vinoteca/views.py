@@ -1,5 +1,7 @@
+from django.contrib.auth.mixins import (LoginRequiredMixin, PermissionRequiredMixin)
 from django.shortcuts import render
 from .models import Vino
+from .models import Bodega
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -8,8 +10,6 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-
-from .models import Vino
 
 def home(request):
     vinos = Vino.objects.all()
@@ -26,11 +26,11 @@ class VinoListView(ListView):
     template_name = 'vinoteca/vino_list.html'
     context_object_name = 'vinos'
 
-class VinoDetailView(DetailView):
+class VinoDetailView(LoginRequiredMixin, DetailView):
     model = Vino
     template_name = 'vinoteca/vino_detail.html'
 
-class VinoCreateView(CreateView):
+class VinoCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Vino
     fields = [
         'nombre',
@@ -43,21 +43,62 @@ class VinoCreateView(CreateView):
     ]
     template_name = 'vinoteca/vino_form.html'
     success_url = reverse_lazy('vino_list')
-class VinoUpdateView(UpdateView):
-    model = Vino
-    fields = [
-        'nombre',
-        'descripcion',
-        'precio',
-        'stock',
-        'imagen',
-        'bodega',
-        'categoria'
-    ]
-    template_name = 'vinoteca/vino_form.html'
-    success_url = reverse_lazy('vino_list')
+    permission_required = 'vinoteca.add_vino'
 
-class VinoDeleteView(DeleteView):
+class VinoUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Vino
+    fields = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'stock',
+        'imagen',
+        'bodega',
+        'categoria'
+    ]
+    template_name = 'vinoteca/vino_form.html'
+    success_url = reverse_lazy('vino_list')
+    permission_required = 'vinoteca.change_vino'
+
+class VinoDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Vino
     template_name = 'vinoteca/vino_confirm_delete.html'
     success_url = reverse_lazy('vino_list')
+    permission_required = 'vinoteca.delete_vino'
+
+class BodegaListView(ListView):
+    model = Bodega
+    template_name = 'vinoteca/bodega_list.html'
+    context_object_name = 'bodegas'
+
+class BodegaDetailView(LoginRequiredMixin, DetailView):
+    model = Bodega
+    template_name = 'vinoteca/bodega_detail.html'
+
+class BodegaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Bodega
+    fields = [
+        'nombre',
+        'provincia',
+        'descripcion'
+    ]
+    template_name = 'vinoteca/bodega_form.html'
+    success_url = reverse_lazy('bodega_list')
+    permission_required = 'vinoteca.add_bodega'
+
+class BodegaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Bodega
+    fields = [
+        'nombre',
+        'provincia',
+        'descripcion'
+    ]
+    template_name = 'vinoteca/bodega_form.html'
+    success_url = reverse_lazy('bodega_list')
+    permission_required = 'vinoteca.change_bodega'
+
+class BodegaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Bodega
+    template_name = 'vinoteca/bodega_confirm_delete.html'
+    success_url = reverse_lazy('bodega_list')
+    permission_required = 'vinoteca.delete_bodega'

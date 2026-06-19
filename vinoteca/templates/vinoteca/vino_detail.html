@@ -7,6 +7,7 @@
 <p>Stock: {{ vino.stock }}</p>
 <p>Bodega: {{ vino.bodega }}</p>
 <p>Categoría: {{ vino.categoria }}</p>
+
 {% if vino.imagen %}
     <img
         src="{{ vino.imagen.url }}"
@@ -15,6 +16,10 @@
     >
 {% endif %}
 <hr>
-<a href="{% url 'vino_update' vino.pk %}">Editar</a>
-<a href="{% url 'vino_delete' vino.pk %}">Eliminar</a>
+{% if perms.vinoteca.change_vino %}
+    <a href="{% url 'vino_update' vino.pk %}">Editar</a>
+{% endif %}
+{% if perms.vinoteca.delete_vino %}
+    <a href="{% url 'vino_delete' vino.pk %}">Eliminar</a>
+{% endif %}
 {% endblock %}
