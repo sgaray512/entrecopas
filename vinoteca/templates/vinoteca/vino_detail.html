@@ -22,4 +22,20 @@
 {% if perms.vinoteca.delete_vino %}
     <a href="{% url 'vino_delete' vino.pk %}">Eliminar</a>
 {% endif %}
+<hr>
+
+<h2>Reseñas</h2>
+
+<a href="{% url 'crear_resenia' vino.id %}">
+    Agregar reseña
+</a>
+{% for resenia in vino.resenia_set.all %}
+    <div>
+        <strong>{{ resenia.usuario.username }}</strong>
+        <p>Puntuación: {{ resenia.puntuacion }}/10</p>
+        <p>{{ resenia.comentario }}</p>
+        <small>{{ resenia.fecha }}</small>
+    </div>
+    <hr>
+{% endfor %}
 {% endblock %}

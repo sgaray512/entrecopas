@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
     <title>Entrecopas</title>
 </head>
 <body>
@@ -16,40 +15,24 @@
         <a href="{% url 'vino_list' %}">Vinos</a>
         <a href="{% url 'bodega_list' %}">Bodegas</a>
         <a href="{% url 'admin:index' %}">Admin</a>
-
         {% if user.is_authenticated %}
             <p>{{ mensaje_bienvenida }}</p>
             <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
-                <button type="submit">
-                    Cerrar sesión
-                </button>
+                <button type="submit">Cerrar sesión</button>
             </form>
         {% else %}
             <p>{{ mensaje_bienvenida }}</p>
-            <a href="{% url 'login' %}">
-                Iniciar sesión
-            </a>
-            <a href="{% url 'register' %}">
-                Registrarse
-            </a>
+            <a href="{% url 'login' %}">Iniciar sesión</a>
+            <a href="{% url 'register' %}">Registrarse</a>
         {% endif %}
     </nav>
     <hr>
-    <main>
-        {% if messages %}
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-        {% block body %}
-        {% endblock %}
-    </main>
+    {% block body %}
+    {% endblock %}
     <footer>
         <hr>
-        <p>
-            {{ year }} - Entrecopas
-        </p>
+        <p>{{ year }} - Entrecopas</p>
     </footer>
 </body>
 </html>

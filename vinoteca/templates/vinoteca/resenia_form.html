@@ -1,0 +1,13 @@
+{% extends 'vinoteca/base.html' %}
+
+{% block body %}
+<h1>Agregar reseña</h1>
+<h3>{{ vino.nombre }}</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+        Guardar reseña
+    </button>
+</form>
+{% endblock %}

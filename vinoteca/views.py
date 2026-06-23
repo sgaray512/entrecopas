@@ -1,7 +1,6 @@
 from django.contrib.auth.mixins import (LoginRequiredMixin, PermissionRequiredMixin)
 from django.shortcuts import render
-from .models import Vino
-from .models import Bodega
+from .models import Vino, Bodega, Resenia
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -102,3 +101,28 @@ class BodegaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'vinoteca/bodega_confirm_delete.html'
     success_url = reverse_lazy('bodega_list')
     permission_required = 'vinoteca.delete_bodega'
+
+class ReseniaCreateView(LoginRequiredMixin, CreateView):
+    model = Resenia
+    fields = ['comentario', 'puntuacion']
+    template_name = 'vinoteca/resenia_form.html'
+
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        form.instance.vino = Vino.objects.get(
+            pk=self.kwargs['vino_id']
+        )
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy(
+            'vino_detail',
+            kwargs={'pk': self.kwargs['vino_id']}
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['vino'] = Vino.objects.get(
+            pk=self.kwargs['vino_id']
+        )
+        return context

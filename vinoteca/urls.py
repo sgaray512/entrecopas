@@ -12,6 +12,7 @@ from .views import (
     BodegaCreateView,
     BodegaUpdateView,
     BodegaDeleteView,
+    ReseniaCreateView,
 )
 
 urlpatterns = [
@@ -26,4 +27,5 @@ urlpatterns = [
     path('bodegas/nueva/',BodegaCreateView.as_view(),name='bodega_create'),
     path('bodegas/<int:pk>/editar/',BodegaUpdateView.as_view(),name='bodega_update'),
     path('bodegas/<int:pk>/eliminar/',BodegaDeleteView.as_view(),name='bodega_delete'),
+    path('vinos/<int:vino_id>/resenia/',ReseniaCreateView.as_view(),name='crear_resenia'),
 ]
