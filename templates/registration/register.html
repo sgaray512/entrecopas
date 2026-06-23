@@ -1,13 +1,21 @@
+{% extends 'vinoteca/base.html' %} 
+
 {% block body %}
-<section>
+<div class="caja-formulario">
     <h2>Crear cuenta</h2>
-    <form method="post">
+    <hr style="margin-bottom: 20px; border: 0; border-top: 1px solid var(--color-borde);">
+    
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">
+        
+        <button type="submit" style="width: 100%; margin-top: 15px; font-size: 1.1rem;">
             Registrarse
         </button>
     </form>
-    <p>¿Ya tenés cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
-</section>
+    
+    <p style="margin-top: 20px; text-align: center;">
+        ¿Ya tenés cuenta? <a href="{% url 'login' %}" style="color: var(--color-vino); font-weight: bold;">Iniciar sesión</a>
+    </p>
+</div>
 {% endblock %}

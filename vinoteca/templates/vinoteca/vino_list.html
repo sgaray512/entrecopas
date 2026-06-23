@@ -1,17 +1,31 @@
 {% extends 'vinoteca/base.html' %}
 
 {% block body %}
-<h1>Listado de Vinos</h1>
-{% if perms.vinoteca.add_vino %}
-<a href="{% url 'vino_create' %}">Crear vino</a>
-{% endif %}
-<hr>
-{% for vino in vinos %}
-    <h3>{{ vino.nombre }}</h3>
-    <p>${{ vino.precio }}</p>
-    {% if perms.vinoteca.view_vino %}
-        <a href="{% url 'vino_detail' vino.pk %}">Ver detalle</a>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Listado de Vinos</h1>
+    {% if perms.vinoteca.add_vino %}
+        <a href="{% url 'vino_create' %}" class="btn">Crear vino</a>
     {% endif %}
-    <br>
-{% endfor %}
+</div>
+<hr style="margin-bottom: 30px; border: 0; border-top: 1px solid var(--color-borde);">
+
+<div class="lista-horizontal">
+    {% for vino in vinos %}
+        <div class="tarjeta-horizontal">
+            {% if vino.imagen %}
+                <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}">
+            {% endif %}
+            
+            <div class="tarjeta-info">
+                <h3>{{ vino.nombre }}</h3>
+                <p class="tarjeta-precio">${{ vino.precio }}</p>
+                <p style="font-size: 0.9rem; color: #666;">Categoría: {{ vino.categoria }} | Bodega: {{ vino.bodega }}</p>
+            </div>
+            
+            <div class="tarjeta-accion">
+                <a href="{% url 'vino_detail' vino.pk %}" class="btn" style="display: block; text-align: center; width: 100%;">Ver detalle</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

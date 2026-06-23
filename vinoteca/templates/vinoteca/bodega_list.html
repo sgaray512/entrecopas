@@ -1,21 +1,28 @@
 {% extends 'vinoteca/base.html' %}
 
 {% block body %}
-<h1>Bodegas</h1>
-{% if perms.vinoteca.add_bodega %}
-<a href="{% url 'bodega_create' %}">
-    Crear bodega
-</a>
-{% endif %}
-<hr>
-{% for bodega in bodegas %}
-    <h3>{{ bodega.nombre }}</h3>
-    <p>{{ bodega.provincia }}</p>
-    {% if perms.vinoteca.view_bodega %}
-        <a href="{% url 'bodega_detail' bodega.pk %}">
-            Ver detalle
-        </a>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Bodegas</h1>
+    {% if perms.vinoteca.add_bodega %}
+        <a href="{% url 'bodega_create' %}" class="btn">Crear bodega</a>
     {% endif %}
-    <br>
-{% endfor %}
+</div>
+<hr style="margin-bottom: 30px; border: 0; border-top: 1px solid var(--color-borde);">
+
+<div class="lista-horizontal">
+    {% for bodega in bodegas %}
+        <div class="tarjeta-horizontal">
+            <div class="tarjeta-info">
+                <h3>{{ bodega.nombre }}</h3>
+                <p style="color: #666; font-weight: bold;">📍 {{ bodega.provincia }}</p>
+            </div>
+            
+            <div class="tarjeta-accion">
+                {% if perms.vinoteca.view_bodega %}
+                    <a href="{% url 'bodega_detail' bodega.pk %}" class="btn" style="display: block; text-align: center; width: 100%;">Ver detalle</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

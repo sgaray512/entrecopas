@@ -1,13 +1,30 @@
 {% extends 'vinoteca/base.html' %}
 
 {% block body %}
-<h1>Entrecopas</h1>
-<h2>Catálogo de vinos</h2>
-{% for vino in vinos %}
-    <p>
-        {{ vino.nombre }}
-        -
-        ${{ vino.precio }}
-    </p>
-{% endfor %}
+<div style="text-align: center; margin-bottom: 40px; padding: 20px; background-color: var(--color-blanco); border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+    <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Bienvenido a Entrecopas</h1>
+    <p style="font-size: 1.1rem; color: #666;">Descubrí nuestra selección exclusiva de vinos.</p>
+</div>
+
+<h2>Catálogo Destacado</h2>
+<hr style="margin-bottom: 20px; border: 0; border-top: 1px solid var(--color-borde);">
+
+<div class="lista-horizontal">
+    {% for vino in vinos %}
+        <div class="tarjeta-horizontal">
+            {% if vino.imagen %}
+                <img src="{{ vino.imagen.url }}" alt="{{ vino.nombre }}">
+            {% endif %}
+            
+            <div class="tarjeta-info">
+                <h3>{{ vino.nombre }}</h3>
+                <p class="tarjeta-precio">${{ vino.precio }}</p>
+            </div>
+            
+            <div class="tarjeta-accion">
+                <a href="{% url 'vino_detail' vino.pk %}" class="btn" style="display: block; text-align: center; width: 100%;">Ver detalle</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

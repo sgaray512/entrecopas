@@ -1,0 +1,55 @@
+{% extends 'vinoteca/base.html' %}
+
+{% block body %}
+<h1>Mis Pedidos</h1>
+<p style="color: #666; margin-bottom: 20px;">Acá podés hacer el seguimiento de tus compras.</p>
+<hr style="margin-bottom: 30px; border: 0; border-top: 1px solid var(--color-borde);">
+
+{% if pedidos %}
+    <div class="lista-horizontal">
+        {% for pedido in pedidos %}
+            <div class="tarjeta-horizontal" style="align-items: flex-start;">
+                
+                <div class="tarjeta-info">
+                    <h3>Pedido #{{ pedido.id }}</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Fecha: {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
+                    
+                    {% if pedido.estado == 'PENDIENTE' %}
+                        <span style="display: inline-block; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; background-color: #fff3cd; color: #856404;">
+                            {{ pedido.estado }}
+                        </span>
+                    {% elif pedido.estado == 'CONFIRMADO' %}
+                        <span style="display: inline-block; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; background-color: #cce5ff; color: #004085;">
+                            {{ pedido.estado }}
+                        </span>
+                    {% elif pedido.estado == 'ENTREGADO' %}
+                        <span style="display: inline-block; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; background-color: #d4edda; color: #155724;">
+                            {{ pedido.estado }}
+                        </span>
+                    {% endif %}
+                </div>
+                
+                <!--Lista de vinos comprados -->
+                <div style="flex-grow: 1;">
+                    <h4 style="font-size: 1rem; margin-bottom: 10px; color: var(--color-vino);">Detalle de la compra:</h4>
+                    <ul style="list-style-type: none; padding: 0;">
+                        {% for detalle in pedido.detalles.all %}
+                            <li style="font-size: 0.95rem; margin-bottom: 5px; border-bottom: 1px dashed var(--color-borde); padding-bottom: 5px;">
+                                <strong>{{ detalle.cantidad }}x</strong> {{ detalle.vino.nombre }} 
+                                <span style="float: right;">${{ detalle.subtotal }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <!-- NO COMPRO NADA -->
+    <div style="text-align: center; padding: 40px; background-color: var(--color-blanco); border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <p style="font-size: 1.2rem; color: #666; margin-bottom: 15px;">Todavía no hiciste ningún pedido.</p>
+        <a href="{% url 'vino_list' %}" class="btn" style="display: inline-block;">Ver catálogo de vinos</a>
+    </div>
+{% endif %}
+{% endblock %}

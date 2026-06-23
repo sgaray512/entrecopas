@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,28 +9,36 @@
 </head>
 <body>
     <nav>
-        <a href="{% url 'home' %}">Entrecopas</a>
-        <a href="{% url 'home' %}">Inicio</a>
-        <a href="{% url 'vino_list' %}">Vinos</a>
-        <a href="{% url 'bodega_list' %}">Bodegas</a>
-        <a href="{% url 'admin:index' %}">Admin</a>
-        {% if user.is_authenticated %}
-            <p>{{ mensaje_bienvenida }}</p>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Cerrar sesión</button>
-            </form>
-        {% else %}
-            <p>{{ mensaje_bienvenida }}</p>
-            <a href="{% url 'login' %}">Iniciar sesión</a>
-            <a href="{% url 'register' %}">Registrarse</a>
-        {% endif %}
+        <div class="nav-links">
+            <a href="{% url 'home' %}"><strong>🍷Entrecopas🍷</strong></a>
+            <a href="{% url 'home' %}">Inicio</a>
+            <a href="{% url 'vino_list' %}">Vinos</a>
+            <a href="{% url 'bodega_list' %}">Bodegas</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'pedidos' %}" style="color: #D4AF37;">Mis Pedidos</a>
+            {% endif %}
+            <a href="{% url 'admin:index' %}">Admin</a>
+        </div>
+        
+        <div class="user-actions" style="display: flex; align-items: center; gap: 15px;">
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn" style="background-color: #333;">Cerrar sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+                <a href="{% url 'register' %}" class="btn">Registrarse</a>
+            {% endif %}
+        </div>
     </nav>
-    <hr>
-    {% block body %}
-    {% endblock %}
+
+    <main class="container">
+        {% block body %}
+        {% endblock %}
+    </main>
+
     <footer>
-        <hr>
         <p>{{ year }} - Entrecopas</p>
     </footer>
 </body>
