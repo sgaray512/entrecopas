@@ -11,3 +11,6 @@
 <img width="1851" height="1004" alt="bodegas" src="https://github.com/user-attachments/assets/52c476c6-a668-4d89-80b4-a14fff021470" />
 <p>DETALLE DE BODEGA</p>
 <img width="1851" height="1004" alt="imagen" src="https://github.com/user-attachments/assets/904222f5-7ef5-4775-90f3-37bf98e61ad6" />
+<p>INTEGRANTES:
+Ibarra Matias
+Garay Santiago</p>
